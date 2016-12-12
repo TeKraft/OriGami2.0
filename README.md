@@ -1,3 +1,20 @@
+### Getting to work offline
+* Follow the instructions
+```sh
+npm install -g gulp
+```
+```sh
+npm install -g ionic
+```
+* goto directory of OriGami2.0
+```sh
+npm install
+```
+* after npm install type in following command to start server. It will start at localhost:8000
+```sh
+gulp dev
+```
+
 # OriGami
 OriGami is the geospatial learning game for kids. Consist of two parts:
 * For teachers, which are able to create and edit new games
@@ -31,15 +48,15 @@ ionic platform add android
 ```sh
 ionic build android
 ```
-If successful, the APK will be created under 
+If successful, the APK will be created under
 *\<project-dir\>/platforms/android/build/outputs/apk/android-debug.apk*
 * Run (requires Android SDK)
 ```sh
-ionic run android 
+ionic run android
 ```
   This will copy the APK to the connected device and launch it. The device must be configured to allow debugging.
 
-### REST API 
+### REST API
 
 * http://server-name : port/games - get all available games (GET)
 * http://server-name : port/games/item/*game_name* - get only one game (GET)

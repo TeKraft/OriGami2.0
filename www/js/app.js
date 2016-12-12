@@ -106,15 +106,27 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
         //         }
         //     }
         // })
+
         .state('tab.acclogin', {
-          url: '/acclogin',
-          views: {
-            'tab-acclogin': {
-              templteURL: 'templates/acc-login.html',
-              controller: 'GamesCtrl'
+            url: '/acclogin',
+            views: {
+                'tab-acclogin': {
+                    templateUrl: 'templates/acc-login.html',
+                    controller: 'LoginCtrl'
+                }
             }
-          }
         })
+
+        // .state('tab.acclogin', {
+        //   url: '/acclogin',
+        //   cache: false,
+        //   views: {
+        //     'tab-acclogin': {
+        //       templteURL: 'templates/old-home.html',
+        //       controller: 'HomeCtrl'
+        //     }
+        //   }
+        // })
 
 
 
@@ -227,7 +239,7 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
             }
         });
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/home');
+    $urlRouterProvider.otherwise('/tab/home');    // #ich dumm wie Brot!
 })
 
 .config(['$localForageProvider', function ($localForageProvider) {
