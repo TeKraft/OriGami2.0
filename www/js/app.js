@@ -96,6 +96,28 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
             }
         })
 
+        // NEW: home2 before --> try, play, login etc
+        // .state('tab.acchome', {
+        //     url: '/acchome',
+        //     views: {
+        //         'tab-acchome': {
+        //             templateUrl: 'templates/acc-home.html',
+        //             controller: 'HomeCtrlPlus'  //HomeCtrlPlus
+        //         }
+        //     }
+        // })
+        .state('tab.acclogin', {
+          url: '/acclogin',
+          views: {
+            'tab-acclogin': {
+              templteURL: 'templates/acc-login.html',
+              controller: 'GamesCtrl'
+            }
+          }
+        })
+
+
+
         .state('tab.avgames', {
             url: '/avgames',
             cache: false,

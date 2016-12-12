@@ -1,0 +1,18 @@
+TODO:
+  app.js
+    HomeCtrlPlus
+    LoginCtrl
+
+
+acclogin
+  login
+    profile
+    play
+    create
+  play
+    choose game
+  create
+    choose game
+      edit
+      delete
+    create game
