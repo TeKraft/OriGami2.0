@@ -96,37 +96,44 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
             }
         })
 
-        // NEW: home2 before --> try, play, login etc
-        // .state('tab.acchome', {
-        //     url: '/acchome',
+        // .state('tab.acclogin', {
+        //     url: '/acclogin',
         //     views: {
-        //         'tab-acchome': {
-        //             templateUrl: 'templates/acc-home.html',
-        //             controller: 'HomeCtrlPlus'  //HomeCtrlPlus
+        //         'tab-home': {
+        //             templateUrl: 'templates/acc-login.html',
+        //             controller: 'LoginCtrl'
         //         }
         //     }
         // })
 
-        .state('tab.acclogin', {
-            url: '/acclogin',
+        // .state('tab.login', {
+        //     url: '/login',
+        //     views: {
+        //         'tab-home': {
+        //             templateUrl: 'templates/login.html',
+        //             controller: 'LoginCtrl'
+        //         }
+        //     }
+        // })
+
+
+
+        // ???????
+        .state('acc', {
+            url: '/acc',
+            abstract: true,
+            templateUrl: 'templates/acc-tabs.html'
+        })
+
+        .state('acc.log', {
+            url: '/log',
             views: {
-                'tab-acclogin': {
-                    templateUrl: 'templates/acc-login.html',
+                'tab-acc': {
+                    templateUrl: 'templates/acc-log.html',
                     controller: 'LoginCtrl'
                 }
             }
         })
-
-        // .state('tab.acclogin', {
-        //   url: '/acclogin',
-        //   cache: false,
-        //   views: {
-        //     'tab-acclogin': {
-        //       templteURL: 'templates/old-home.html',
-        //       controller: 'HomeCtrl'
-        //     }
-        //   }
-        // })
 
 
 

@@ -7,17 +7,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
                             '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data',
                             function ($rootScope, $scope, $http, $location, $ionicModal, $window, $timeout,
                                         $ionicPopup, $ionicHistory, $translate, API, Data) {
-
   console.log("LoginCtrl start");
+  
 
-  $scope.showSomething = function () {
-    $ionicPopup.alert({
-        title: $translate.instant('find_destination'),
-        /* template: 'Navigators have to plan a path to reach the destination. They refer to the survey knowledge they already have available, combine it in new ways and possibly make inferences about missing pieces. Requires more cognitive effort.'*/
-        template: $translate.instant('put_longer_tap')
-    });
-  };
-  console.log("LoginCtrl end");
 }])
 
 .controller('GamesCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout',
