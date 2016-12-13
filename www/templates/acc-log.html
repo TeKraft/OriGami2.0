@@ -1,14 +1,60 @@
-<ion-view view-title="Account Login" style="background-color:#B22222;" view-title="Account Login">
+<ion-view view-title="Account Login" style="background-color:#B22222;" name="login-view">
     <div style="position:fixed; top:2%; width:100%;">
-        <h2 class="techm_h">Try to get it working!</h2>
+        <h2 class="techm_h">LOGIN now or REGISTER asap</h2>
         <!-- <i class="ion-arrow-left-c back_icon" ng-click="cancelGame()"></i> -->
         <i class="ion-arrow-left-c back_icon" ui-sref="tab.home"></i>
         <!-- <button ng-click = "createFile()">ASDGFASDGASDG</button> -->
     </div>
     <ion-content style="height:90%;top:10%;">
       <h1>it works</h1>
-    </ion-content>
 
+<!--
+Login:
+https://devdactic.com/simple-login-example-with-ionic-and-angularjs/
+
+Register&Login:
+http://jasonwatmore.com/post/2015/03/10/angularjs-user-registration-and-login-example-tutorial
+
+ ... with PHP
+http://www.arjunsk.com/html5/how-to-setup-loginregister-using-ionic-cordova-part-5/
+
+
+ionic:
+https://ionicframework.com/docs/api/directive/ionTabs/
+ -->
+
+      <div class="login-field">
+        <div class="list list-inset" >
+            <label class="item item-input">
+                <input type="text" placeholder="Username" ng-model="data.username">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.password">
+            </label>
+        </div>
+        <button class="button button-block button-calm"ng-click="login()">Login</button>
+      </div>
+
+      <div class="register-field">
+        <div class="list list-inset" >
+            <label class="item item-input">
+                <input type="text" placeholder="email" ng-model="data.username">
+            </label>
+            <label class="item item-input">
+                <input type="text" placeholder="Username" ng-model="data.username">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.password">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="data.username">
+            </label>
+
+        </div>
+        <button class="button button-block button-calm"ng-click="register()">Register</button>
+      </div>
+
+    </ion-content>
 
 
 
