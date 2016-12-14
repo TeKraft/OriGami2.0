@@ -96,47 +96,6 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
             }
         })
 
-        // .state('tab.acclogin', {
-        //     url: '/acclogin',
-        //     views: {
-        //         'tab-home': {
-        //             templateUrl: 'templates/acc-login.html',
-        //             controller: 'LoginCtrl'
-        //         }
-        //     }
-        // })
-
-        // .state('tab.login', {
-        //     url: '/login',
-        //     views: {
-        //         'tab-home': {
-        //             templateUrl: 'templates/login.html',
-        //             controller: 'LoginCtrl'
-        //         }
-        //     }
-        // })
-
-
-
-        // ???????
-        .state('acc', {
-            url: '/acc',
-            abstract: true,
-            templateUrl: 'templates/acc-tabs.html'
-        })
-
-        .state('acc.log', {
-            url: '/log',
-            views: {
-                'tab-acc': {
-                    templateUrl: 'templates/acc-log.html',
-                    controller: 'LoginCtrl'
-                }
-            }
-        })
-
-
-
         .state('tab.avgames', {
             url: '/avgames',
             cache: false,
@@ -244,9 +203,41 @@ angular.module('starter', ['ionic', 'naif.base64', 'ngMdIcons', 'pascalprecht.tr
                     controller: 'NewGameCtrl'
                 }
             }
-        });
+        })
+
+        // ########################################################
+        // starting templates for usermanagement/ OriGami-Base-Game
+        // ########################################################
+
+        // abstract for all "acc"-tabs
+        .state('acc', {
+            url: '/acc',
+            abstract: true,
+            templateUrl: 'templates/acc-tabs.html'
+        })
+
+        .state('acc.log', {
+            url: '/log',
+            views: {
+                'tab-acc': {
+                    templateUrl: 'templates/acc-log.html',
+                    controller: 'LoginCtrl'
+                }
+            }
+        })
+
+        .state('acc.profile', {
+            url: '/profile', //     /:accusername',
+            views: {
+                'tab-acc': {
+                    templateUrl: 'templates/acc-profile.html',
+                    controller: 'LoginCtrl'
+                }
+            }
+        })
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/home');    // #ich dumm wie Brot!
+    $urlRouterProvider.otherwise('/tab/home');    // TODO: '/acc/log'
 })
 
 .config(['$localForageProvider', function ($localForageProvider) {

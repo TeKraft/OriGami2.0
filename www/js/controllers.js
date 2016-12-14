@@ -3,14 +3,54 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
 .controller('HomeCtrl', function ($scope) {})
 
-.controller('LoginCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout',
-                            '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data',
-                            function ($rootScope, $scope, $http, $location, $ionicModal, $window, $timeout,
-                                        $ionicPopup, $ionicHistory, $translate, API, Data) {
-  console.log("LoginCtrl start");
-  
+// #################################################################################################
+// controller login
+// #################################################################################################
 
-}])
+// NEW: LoginCtrl
+.controller('LoginCtrl', function ($scope, $ionicPopup, $state, LoginService) {
+  console.log("start: LoginCtrl");
+
+  $scope.data = {};
+
+  //Get back in the history
+  $scope.getBack = function () {
+      $ionicHistory.goBack();
+  };
+
+
+  // execute function login() -- see acc-log.html
+  $scope.login = function () {
+    console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+
+    LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
+      $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Login failed!',
+        template: 'Please check your credentials!'
+      });
+    });
+  }
+
+  $scope.register = function () {
+    console.log("REGISTER email: " + $scope.data.REGemail
+              + " - user: " + $scope.data.REGusername
+              + " - PW: " + $scope.data.REGpassword
+              + " - PWctrl: " + $scope.data.REGpasswordCTRL);
+
+  }
+
+  $scope.profileEdit = function (name) {
+    console.log(name);
+  }
+
+  console.log("end: LoginCtrl");
+})
+
+// #################################################################################################
+// controller game
+// #################################################################################################
 
 .controller('GamesCtrl', [ '$rootScope', '$scope', '$http', '$location', '$ionicModal', '$window', '$timeout',
                             '$ionicPopup', '$ionicHistory', '$translate', 'API', 'Data',

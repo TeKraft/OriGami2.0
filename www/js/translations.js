@@ -1,5 +1,8 @@
 var translations = {
     "en": {
+        "base_info": "your Bases",
+        "user_stats": "your stats",
+
         "add_points": "Add Several Points",
         "add_waypoint": "Add Waypoint",
         "answer_instruction": "Now answer the question",
@@ -100,6 +103,9 @@ var translations = {
 
     /* Deutsch --------------------------------------------------- */
     "de": {
+        "base_info": "deine Basen",
+        "user_stats": "deine Statistik",
+
         "add_points": "Füge einige Punkte hinzu",
         "add_waypoint": "Füge Wegpunkt hinzu",
         "answer_instruction": "Beantworten Sie jetzt die Frage",
@@ -197,6 +203,9 @@ var translations = {
 
     /* Spanish --------------------------------------------------- */
     "es": {
+        "base_info": "su basis",
+        "user_stats": "su statistica",
+
         "add_points": "Agrege varios puntos",
         "add_waypoint": "Agrege un punto en el camino",
         "appinfo": "idiomas",
@@ -283,6 +292,9 @@ var translations = {
 
     /* Portugese */
     "pt": {
+        "base_info": "pt: your Bases",
+        "user_stats": "pt: your stats",
+
         "add_points": "Adiciona vários pontos",
         "add_waypoint": "Adiciona um ponto de passagem",
         "appinfo": "Línguas",
@@ -368,6 +380,8 @@ var translations = {
     /* Català ------------------------------------------- */
 
     "ca": {
+        "base_info": "ca: your Bases",
+        "user_stats": "ca: your stats",
 
         "cool": "Guai!",
         "add_points": "Agrege diversos punts",
