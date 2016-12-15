@@ -3,9 +3,9 @@ var mongojs = require('mongojs');
 var db = mongojs('origami', ['games']);
 var fs = require('fs');
 var multer = require('multer');
-var md5file = require('md5-file')
-var path = require('path')
-var im = require('imagemagick')
+var md5file = require('md5-file');
+var path = require('path');
+var im = require('imagemagick');
 
 var https_options = {
   key: fs.readFileSync('path_to_ssl_certificate_key'),
@@ -13,6 +13,7 @@ var https_options = {
 }
 
 var server = restify.createServer(https_options);
+// var server = restify.createServer();
 
 /* Solving CORS development pains */
 server.use(
@@ -171,15 +172,15 @@ server.get("/data/img/:filename", function (req, res, next) {
 
 
 // Preparations for image upload using multer
-var upload = multer({ 
+var upload = multer({
 	dest : './data/',
   limits: {
-    filesize: 3000000, 
+    filesize: 3000000,
     files:1
   }
 }).single("imgfile");
 
-/* 
+/*
   1. Upload image to directory specified by multer (temp filename auto-assigned by multer)
   2. Get image parameters (type, width, height, size) using Imagemagick (requires it to be pre-installed)
   3. Calculate MD5 checksum of uploaded file
@@ -197,7 +198,7 @@ server.post("/data/img/upload", upload, function(req, res, next) {
     var basename = path.basename(uploaded_file)
     var md5sum = md5file.sync(uploaded_file);
     var new_file = uploaded_dir + path.sep + md5sum + ext_map[format];
-    
+
     if (fs.existsSync(new_file)) {
       console.log('File "' + uploaded_file + '" is the same as "' + new_file + '". Removing the former.');
       fs.unlink(uploaded_file, function(err) {
@@ -208,10 +209,10 @@ server.post("/data/img/upload", upload, function(req, res, next) {
       fs.renameSync(uploaded_file, new_file)
     }
     res.contentType = 'json';
-    res.send(200, {'img_file': path.basename(new_file)}).end();  
+    res.send(200, {'img_file': path.basename(new_file)}).end();
   }
 
-  /* Get image params from ImageMagick */  
+  /* Get image params from ImageMagick */
   im.identify( uploaded_file, function(err, features) {
     if (err) throw err;
     var format = features['format'];
@@ -220,7 +221,7 @@ server.post("/data/img/upload", upload, function(req, res, next) {
     var size = features['filesize'];
     process_image(uploaded_file, format, width, height, size);
   });
-  
+
   return next();
 });
 

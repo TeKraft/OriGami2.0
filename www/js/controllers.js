@@ -1,6 +1,5 @@
 angular.module('starter.controllers', ['starter.services', 'starter.directives'])
 
-
 .controller('HomeCtrl', function ($scope) {})
 
 // #################################################################################################
@@ -26,8 +25,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
 
       console.log("loginUser");
-      ClearInputField.clearInput(data.username);
-      ClearInputField.clearInput(data.password);
+      // ClearInputField.clearInput(data.username);
+      // ClearInputField.clearInput(data.password);
       console.log($scope.data.username);
       console.log($scope.data.password);
 
