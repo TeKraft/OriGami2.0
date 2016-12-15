@@ -8,7 +8,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 // #################################################################################################
 
 // NEW: LoginCtrl
-.controller('LoginCtrl', function ($scope, $ionicPopup, $state, LoginService) {
+.controller('LoginCtrl', function ($scope, $ionicPopup, $ionicHistory, $state, LoginService) {
   console.log("start: LoginCtrl");
 
   $scope.data = {};
@@ -24,7 +24,14 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
 
     LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-      $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+
+      console.log("loginUser");
+      ClearInputField.clearInput(data.username);
+      ClearInputField.clearInput(data.password);
+      console.log($scope.data.username);
+      console.log($scope.data.password);
+
+      // $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
     }).error(function(data) {
       var alertPopup = $ionicPopup.alert({
         title: 'Login failed!',
@@ -41,8 +48,9 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
   }
 
-  $scope.profileEdit = function (name) {
-    console.log(name);
+  $scope.profileEdit = function () {
+
+    console.log($scope.data.username);
   }
 
   console.log("end: LoginCtrl");
@@ -77,6 +85,8 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
     $scope.cancelGame = function () {
         $ionicHistory.goBack();
     };
+
+    console.log(API.getMetadata());
 
     // Fetch all the games from the server
     $scope.games = [];

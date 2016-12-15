@@ -4,6 +4,19 @@ angular.module('starter.services', [])
 // services service
 // #################################################################################################
 
+// NEW: clear input field
+.factory('ClearInputField', function() {
+  console.log("ClearInputField");
+
+  clearInput = function(fieldID) {
+
+    console.log("clearInput");
+    console.log(fieldID);
+    console.log($scope.fieldID);
+    // $scope.fieldID = null;
+  };
+})
+
 // NEW: Login Service
 .service('LoginService', function($q) {
   return {
@@ -28,6 +41,11 @@ angular.module('starter.services', [])
       return promise;
     }
   }
+})
+
+// NEW: account edit factory
+.factory('EditProfile', function() {
+
 })
 
 // #################################################################################################
