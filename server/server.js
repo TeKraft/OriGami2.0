@@ -22,57 +22,60 @@ var md5file = require('md5-file');
 var path = require('path');
 var im = require('imagemagick');
 
-var mongoose = require('mongoose');
+var express = require('express');
 
 var db;
 
-var server = restify.createServer();
+ // var server = restify.createServer({
+ //   name: "myApp"
+ // });
+ var app = express();
 
 /* Solving CORS development pains */
-server.use(
-  restify.CORS({
-    origins: [
-      '*'
-    ],
-    headers: [
-      "authorization",
-      "withcredentials",
-      "x-requested-with",
-      "x-forwarded-for",
-      "x-real-ip",
-      "x-customheader",
-      "user-agent",
-      "keep-alive",
-      "host",
-      "accept",
-      "connection",
-      "upgrade",
-      "content-type",
-      "dnt",
-      "if-modified-since",
-      "cache-control"
-    ],
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
-  })
-)
-
-function corsHandler(req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    //res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-Requested-With, X-PINGOTHER, X-CSRF-Token, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Expose-Headers', 'X-Api-Version, X-Request-Id, X-Response-Time');
-    res.setHeader('Access-Control-Max-Age', '1000');
-    return next();
-  }
-  // server.use();
-
-  // Handle all OPTIONS requests to a deadend (Allows CORS to work them out)
-  // server.opts( /.*/, ( req, res ) => res.send( 200 ) )
-  server.opts('/.*/', corsHandler, function(req, res, next) {
-    res.send(200);
-    return next();
-  });
+// server.use(
+//   restify.CORS({
+//     origins: [
+//       '*'
+//     ],
+//     headers: [
+//       "authorization",
+//       "withcredentials",
+//       "x-requested-with",
+//       "x-forwarded-for",
+//       "x-real-ip",
+//       "x-customheader",
+//       "user-agent",
+//       "keep-alive",
+//       "host",
+//       "accept",
+//       "connection",
+//       "upgrade",
+//       "content-type",
+//       "dnt",
+//       "if-modified-since",
+//       "cache-control"
+//     ],
+//     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
+//   })
+// )
+//
+// function corsHandler(req, res, next) {
+//     res.setHeader("Access-Control-Allow-Origin", "*");
+//     //res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-Requested-With, X-PINGOTHER, X-CSRF-Token, Authorization');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.setHeader('Access-Control-Expose-Headers', 'X-Api-Version, X-Request-Id, X-Response-Time');
+//     res.setHeader('Access-Control-Max-Age', '1000');
+//     return next();
+//   }
+//   // server.use();
+//
+//   // Handle all OPTIONS requests to a deadend (Allows CORS to work them out)
+//   // server.opts( /.*/, ( req, res ) => res.send( 200 ) )
+//   server.opts('/.*/', corsHandler, function(req, res, next) {
+//     res.send(200);
+//     return next();
+//   });
 
   /* End of CORS fixes */
   /*
@@ -80,6 +83,8 @@ function corsHandler(req, res, next) {
 
   // server.use(restify.acceptParser(server.acceptable));
   // server.use(restify.queryParser());
+  // server.use(restify.bodyParser());
+  // server.use(restify.CORS());
 
 // --------------------------------------------------
 // Start Message
@@ -95,23 +100,23 @@ console.log('############################################################');
 // var app = express();
 
 /* get home page */
-// app.use(express.static("../server"));
-// app.use(express.static("../public"));
+// app.use(express.static("../*"));
+app.use(express.static("../server"));
+app.use(express.static("../www"));
+app.use(express.static("../dist"));
 
 // enable processing of the received post content
-server.use(bodyParser.urlencoded({extended: true})); // to enable processing of the received post content
+app.use(bodyParser.urlencoded({extended: true})); // to enable processing of the received post content
 
-// server.use(restify.acceptParser(server.acceptable));
-// server.use(restify.queryParser());
 
 // --------------------------------------------------
 
 // code which is executed on every request
-// app.use(function(req, res, next) {
-//     console.log(req.method + ' ' + req.url + ' was requested by ' + req.connection.remoteAddress);
-//     res.header('Access-Control-Allow-Origin', '*');    // allow CORS
-//     next();
-// });
+app.use(function(req, res, next) {
+    console.log(req.method + ' ' + req.url + ' was requested by ' + req.connection.remoteAddress);
+    res.header('Access-Control-Allow-Origin', '*');    // allow CORS
+    next();
+});
 
 
 // --------------------------------------------------
@@ -119,11 +124,12 @@ server.use(bodyParser.urlencoded({extended: true})); // to enable processing of 
 // --------------------------------------------------
 
 // Start the web server
-server.listen(config.express_port, function() {
-    console.log('------------------------------------------------------------');
-    console.log('  Express server listening on port', config.express_port.toString().cyan);
-    console.log('------------------------------------------------------------');
-});
+  app.listen(config.express_port, function() {
+      console.log('------------------------------------------------------------');
+      console.log('  Express server listening on port', config.express_port.toString().cyan);
+      console.log('------------------------------------------------------------');
+  });
+
 
 /* launch database */
 // connect to database
@@ -142,14 +148,15 @@ db.once('open', function (callback) {
 
 /* http routing */
 // code which is executed on every request
-server.use(function(req, res, next) {
-	console.log(req.method + ' ' + req.url + ' was requested by ' + req.connection.remoteAddress);
 
-	res.header('Access-Control-Allow-Origin', '*');    // allow CORS
-	//res.header('Access-Control-Allow-Methods', 'GET,POST');
-
-	next();
-});
+// app.use(function(req, res, next) {
+// 	console.log(req.method + ' ' + req.url + ' was requested by ' + req.connection.remoteAddress);
+//
+// 	res.header('Access-Control-Allow-Origin', '*');    // allow CORS
+// 	//res.header('Access-Control-Allow-Methods', 'GET,POST');
+//
+// 	next();
+// });
 
 
 // --------------------------------------------------
@@ -168,16 +175,35 @@ var Feature = mongoose.model('Feature', featureSchema);
 // --------------------------------------------------
 
 // /* GET home page. */
-// server.get('/', function(req, res, next) {
-//   res.render('index');
+app.get('/', function(req, res, next) {
+  res.render('index');
+});
+
+//
+// var server = restify.createServer();
+//
+//
+// server.get('index', restify.serveStatic({
+//   directory: './'
+// }));
+// // server.post('api_name', api.api_name);
+//
+// // Start the web server
+// server.listen(config.express_port, "localhost", function() {
+//     console.log('------------------------------------------------------------');
+//     console.log('  Express server listening on port', config.express_port.toString().cyan);
+//     console.log('------------------------------------------------------------');
+//     console.log('%s listening at %s ', server.name , server.url);
 // });
+
+
 //
 // /*app.get('/stadium*', function(req, res, next) {
 //   res.render('stadium');
 // });*/
 //
 // // returns json of all stored features
-// server.get('/getAllFeatures', function(req, res) {
+// app.get('/getAllFeatures', function(req, res) {
 // 	Feature.find(function(error, features) {
 // 		if (error) return console.error(error);
 // 		// console.log(features);
@@ -186,7 +212,7 @@ var Feature = mongoose.model('Feature', featureSchema);
 // });
 //
 // // returns name of all stored features
-// server.get('/getFeatureNames*', function(req, res) {
+// app.get('/getFeatureNames*', function(req, res) {
 // 	console.log("try to get all Feature names");
 // 	var title = req.url.substring(22, req.url.length);
 // 	var message;
@@ -205,7 +231,7 @@ var Feature = mongoose.model('Feature', featureSchema);
 // });
 //
 // // returns only one specific feature, choosen/filtered by their unique object id
-// server.get('/getOneFeature*', function(req, res) {
+// app.get('/getOneFeature*', function(req, res) {
 // 	console.log("inside getOneFeature*");
 // 	// console.log(req.url);
 // 	var uniqueID = req.url.substring(18, req.url.length);	//19		iwas hier stimmt nicht!!!
@@ -223,7 +249,7 @@ var Feature = mongoose.model('Feature', featureSchema);
 // // takes a json document via POST, which will be added to the database
 // // name is passed via URL
 // // url format: /addFeature?name=
-// server.post('/addFeature*', function(req, res) {
+// app.post('/addFeature*', function(req, res) {
 // 	var title = req.url.substring(17, req.url.length);
 // 	// console.log(title);
 // 	// console.log(req.body);
@@ -244,7 +270,7 @@ var Feature = mongoose.model('Feature', featureSchema);
 // // and the already existing document will be updated by the new
 // // name is passed via URL
 // // url format: /updateFeature?name=*
-// server.post('/updateFeature*', function(req, res) {
+// app.post('/updateFeature*', function(req, res) {
 // 	var title = req.url.substring(20, req.url.length);
 // 	Feature.update(
 // 		{ name: title },

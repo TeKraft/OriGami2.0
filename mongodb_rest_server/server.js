@@ -7,10 +7,17 @@ var md5file = require('md5-file');
 var path = require('path');
 var im = require('imagemagick');
 
+var mongoose = require('mongoose');
+var color = require('colors');
+var config = require('./config');
+
 var https_options = {
-  key: fs.readFileSync('path_to_ssl_certificate_key'),
-  certificate: fs.readFileSync('path_to_ssl_certificate')
+  name: 'myApp',
+  // key: fs.readFileSync('path_to_ssl_certificate_key'),
+  // certificate: fs.readFileSync('path_to_ssl_certificate')
 }
+
+var db;
 
 var server = restify.createServer(https_options);
 // var server = restify.createServer();
@@ -73,9 +80,72 @@ server.use(restify.queryParser());
 */
 //server.use(restify.bodyParser());
 
+// --------------------------------------------------
+// Start Message
+// --------------------------------------------------
+
+console.log('############################################################');
+console.log('############################################################');
+console.log('               STARTING SERVER...');
+console.log('############################################################');
+console.log('############################################################');
+
+// // use this function to retry if a connection cannot be established immediately
+// (function connectWithRetry () {
+//   db = mongojs(cfg.dbconnectionstring, ['games']);
+//   console.log("connectstring");
+//   console.log(cfg.dbconnectionstring);
+//
+//   db.on('error', function (err) {
+//     console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+//     setTimeout(connectWithRetry, 5000);
+//   });
+//
+//   // db.on('connect', function () {
+//   //   console.log('database connected');
+//   //   return;
+//   // });
+//
+//   db.once('open', function (callback) {
+//     console.log('connection to database established on mongo-port ' + cfg.mongoport.toString());
+//   });
+//
+// })();
+
+/* launch database */
+// connect to database
+mongoose.connect(config.mongodb_host);
+db = mongoose.connection;
+
+// open database
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  console.log('connection to database established on mongo-port ' + config.mongodb_port.toString().cyan);
+});
+
+// // --------------------------------------------------
+// // Featureschema definition
+// // --------------------------------------------------
+//
+// /* database schema */
+// var featureSchema = mongoose.Schema({
+// 	name: String,
+// 	data: {}
+// });
+// var Feature = mongoose.model('Feature', featureSchema);
+//
+// // --------------------------------------------------
+// // Server requests
+// // --------------------------------------------------
+
+
 
 server.listen(5000, "127.0.0.1", function () {
   console.log("Mongodb REST interface server started. Will only listen to requests from localhost (use nginx etc. downstream)");
+  console.log('------------------------------------------------------------');
+  console.log('  Express server listening on port', config.express_port.toString().cyan);
+  console.log('------------------------------------------------------------');
+  console.log('%s listening at %s ', server.name , server.url);
 });
 
 // Get only one certain game

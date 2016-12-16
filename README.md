@@ -1,4 +1,31 @@
-### Getting to work offline
+### Getting to work offline with express
+* start mongodb
+```sh
+mongod --bind_ip 0.0.0.0
+```
+* or
+```sh
+mongod --dbpath .../data
+```
+* use db
+```sh
+mongo
+```
+```sh
+use dbname
+```
+* start server
+* go to /server
+```sh
+npm install
+```
+```sh
+node server.js
+```
+* server will start on localhost:5000
+* you can't get games/metadata - there will be error shown -- so don't mind ;)
+
+### different way offline with gulp
 * Follow the instructions
 ```sh
 npm install -g gulp

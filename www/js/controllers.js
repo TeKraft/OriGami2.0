@@ -30,7 +30,7 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
       console.log($scope.data.username);
       console.log($scope.data.password);
 
-      // $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+      $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
     }).error(function(data) {
       var alertPopup = $ionicPopup.alert({
         title: 'Login failed!',
