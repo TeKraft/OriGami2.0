@@ -45,6 +45,18 @@ angular.module('starter.services', [])
   }
 })
 
+.service('EditService', function() {
+  return {
+    editValue: function(value, def) {
+      console.log("EditService");
+      console.log(value);
+      console.log(def);
+      var back = value + ', ' + def;
+      return back;
+    }
+  }
+})
+
 // NEW: account edit factory
 .factory('EditProfile', function() {
 

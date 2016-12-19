@@ -3,6 +3,7 @@
         <h2 class="techm_h">Profile</h2>
         <!-- <i class="ion-arrow-left-c back_icon" ng-click="cancelGame()"></i> -->
         <i class="ion-arrow-left-c back_icon" ng-click="getBack()"></i>
+        <i class="button button-balanced icon ion-home button-fab button-fab-top-right" ng-click="logout()"></i>
     </div>
     <ion-content style="height:90%;top:10%;">
 
@@ -24,11 +25,11 @@
 
       <div class="forTesting">
         <label class="testlabel">
-            <input type="text" placeholder="write Name" ng-model="user.name">
+            <input type="text" placeholder="write Name" ng-model="data.editUsername">
         </label>
       </div>
 
-            <button id="btnedit" class="button button-balanced icon ion-edit button-fab button-fab-top-right" ng-click="profileEdit(user.name)">
+            <button id="btnedit" class="button button-balanced icon ion-edit button-fab button-fab-top-right" ng-click="profileEdit(data.editUsername, 'username')">
     </ion-content>
 
 

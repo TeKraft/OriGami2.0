@@ -47,9 +47,30 @@ angular.module('starter.controllers', ['starter.services', 'starter.directives']
 
   }
 
-  $scope.profileEdit = function () {
+  $scope.profileEdit = function (value, def) {
+    console.log(value);
+    console.log(def);
 
-    console.log($scope.data.username);
+    EditService.editValue(value, def).success(function(data) {
+
+      console.log("EditUser");
+      console.log(value);
+      console.log(def);
+
+      console.log($scope.value);
+      console.log($scope.def);
+
+      // $state.go('acc.profile'); // bei Erfolg auf folgende html weiterleiten
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Edit failed!',
+        template: 'Please check the fields!'
+      });
+    });
+  }
+
+  $scope.logout = function() {
+    console.log("logout()");
   }
 
   console.log("end: LoginCtrl");

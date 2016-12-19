@@ -7,14 +7,9 @@ var md5file = require('md5-file');
 var path = require('path');
 var im = require('imagemagick');
 
-var mongoose = require('mongoose');
-var color = require('colors');
-var config = require('./config');
-
 var https_options = {
-  name: 'myApp',
-  // key: fs.readFileSync('path_to_ssl_certificate_key'),
-  // certificate: fs.readFileSync('path_to_ssl_certificate')
+  key: fs.readFileSync('path_to_ssl_certificate_key'),
+  certificate: fs.readFileSync('path_to_ssl_certificate')
 }
 
 var db;
@@ -91,37 +86,29 @@ console.log('############################################################');
 console.log('############################################################');
 
 // // use this function to retry if a connection cannot be established immediately
-// (function connectWithRetry () {
-//   db = mongojs(cfg.dbconnectionstring, ['games']);
-//   console.log("connectstring");
-//   console.log(cfg.dbconnectionstring);
-//
-//   db.on('error', function (err) {
-//     console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
-//     setTimeout(connectWithRetry, 5000);
-//   });
-//
-//   // db.on('connect', function () {
-//   //   console.log('database connected');
-//   //   return;
-//   // });
-//
-//   db.once('open', function (callback) {
-//     console.log('connection to database established on mongo-port ' + cfg.mongoport.toString());
-//   });
-//
-// })();
+(function connectWithRetry () {
+  db = mongojs(cfg.dbconnectionstring, ['games']);
+  console.log("connectstring");
+  console.log(cfg.dbconnectionstring);
 
-/* launch database */
-// connect to database
-mongoose.connect(config.mongodb_host);
-db = mongoose.connection;
+  db.on('error', function (err) {
+    console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+    setTimeout(connectWithRetry, 5000);
+  });
 
-// open database
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
-  console.log('connection to database established on mongo-port ' + config.mongodb_port.toString().cyan);
-});
+  db.on('connect', function () {
+    console.log('database connected');
+    return;
+  });
+
+
+})();
+
+// // open database
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function (callback) {
+//   console.log('connection to database established on mongo-port ' + config.mongodb_port.toString().cyan);
+// });
 
 // // --------------------------------------------------
 // // Featureschema definition
@@ -143,7 +130,7 @@ db.once('open', function (callback) {
 server.listen(5000, "127.0.0.1", function () {
   console.log("Mongodb REST interface server started. Will only listen to requests from localhost (use nginx etc. downstream)");
   console.log('------------------------------------------------------------');
-  console.log('  Express server listening on port', config.express_port.toString().cyan);
+  console.log('  Server listening on port', config.express_port.toString());
   console.log('------------------------------------------------------------');
   console.log('%s listening at %s ', server.name , server.url);
 });
